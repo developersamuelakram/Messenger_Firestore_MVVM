@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginFragment"
+    android:layout_marginBottom="20dp">
+
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="30dp"
+        android:hint=" Email"
+        android:textColor="@android:color/white"
+        android:inputType="textEmailAddress"
+        android:id="@+id/etEmail"/>
+
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="30dp"
+        android:hint=" Password"
+        android:textColor="@android:color/white"
+
+        android:layout_below="@id/etEmail"
+        android:inputType="textPassword"
+        android:id="@+id/etPassword"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etPassword"
+        android:layout_centerHorizontal="true"
+        android:text="Sign Up?"
+        android:id="@+id/gotosignup"/>
+
+
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gotosignup"
+        android:layout_margin="20dp"
+        android:id="@+id/signInBtn"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:layout_centerHorizontal="true"
+        android:text="Sign In"/>
+
+
+
+</RelativeLayout>

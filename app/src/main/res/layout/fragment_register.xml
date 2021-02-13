@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="20dp"
+    tools:context=".RegisterFragment">
+
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:hint=" Name"
+        android:textColor="@android:color/white"
+        android:inputType="textEmailAddress"
+        android:id="@+id/etNameSignUp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="30dp"
+        android:hint=" Email"
+        android:textColor="@android:color/white"
+
+        android:layout_below="@id/etNameSignUp"
+        android:inputType="textEmailAddress"
+        android:id="@+id/etEmailSignUp"/>
+
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="30dp"
+        android:hint=" Password"
+        android:layout_below="@id/etEmailSignUp"
+        android:inputType="textPassword"
+        android:id="@+id/etPasswordSignUp"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etPasswordSignUp"
+        android:layout_centerHorizontal="true"
+        android:text="Sign In?"
+        android:id="@+id/gottoSignInActivity"/>
+
+
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gottoSignInActivity"
+        android:layout_margin="10dp"
+        android:id="@+id/signUpBtn"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:textColor="@android:color/white"
+        android:text="Sign Up"/>
+
+
+
+
+
+</RelativeLayout>
