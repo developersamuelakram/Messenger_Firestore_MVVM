@@ -1,4 +1,4 @@
-##Chat App - Java built - Firestore, ,MVVM, Navigation 
+# Chat App - Java built - Firestore, MVVM, Navigation 
 
 This app is built on MVVM architecture. Most of the ChatApps are built with Kotlin and there is almost no reference for the beginners to look. I was stuck on how do I create specific chatroom
 for each user because anyone can query data from firestore with MVVM approach but in ChatApp this becomes challenging. You are quering the same collection but displaying 
@@ -13,7 +13,19 @@ This app has.
 5. MVVM
 6. Navigation and much more. 
 
-#YouTube Tutorial: https://www.youtube.com/watch?v=hZSj0HbOh44&list=PLKETiCsEsH0p47hA84bapGVaXIKHgjVdl
+# YouTube Tutorial: https://www.youtube.com/watch?v=hZSj0HbOh44&list=PLKETiCsEsH0p47hA84bapGVaXIKHgjVdl
+
+# LOGIN FRAGMENT
+![](images/1.jpg)
+
+# USER FRAGMENT
+![] (images/4.jpg)
+
+# Profile Update Fragment
+![](images/5.jpg)
+
+# Chat Fragment
+![](images/3.jpg)
 
 
 
