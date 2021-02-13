@@ -19,7 +19,7 @@ This app has.
 ![](images/1.jpg)
 
 # USER FRAGMENT
-![] (images/4.jpg)
+![](images/4.jpg)
 
 # Profile Update Fragment
 ![](images/5.jpg)
