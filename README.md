@@ -30,7 +30,7 @@ This app has.
 ![](images/3.jpg)
 
 # Notifications & FCM
-![](images6.jpg)
+![](6.jpg)
 
 
 
