@@ -43,6 +43,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:22.1.0'
     implementation 'com.google.firebase:firebase-storage:19.2.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -54,5 +55,10 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     implementation 'com.android.support:multidex:1.0.3'
+
+
+
+    implementation 'com.squareup.retrofit2:retrofit:2.2.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.2.0'
 
 }

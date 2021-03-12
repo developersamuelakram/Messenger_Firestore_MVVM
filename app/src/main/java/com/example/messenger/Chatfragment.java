@@ -1,5 +1,8 @@
 package com.example.messenger;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +23,23 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.messenger.MVVM.MessageViewModel;
-import com.example.messenger.Model.MessageModel;
-import com.example.messenger.MyAdapter.MessageAdapter;
+import com.example.messenger.Notification.APISERVICESHIT;
+import com.example.messenger.Notification.Client;
+import com.example.messenger.Notification.Data;
+import com.example.messenger.Notification.Response;
+import com.example.messenger.Notification.Sender;
+import com.example.messenger.Notification.Token;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,6 +47,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+
+import static android.content.ContentValues.TAG;
 
 
 public class Chatfragment extends Fragment {
@@ -55,6 +70,11 @@ public class Chatfragment extends Fragment {
     RecyclerView recyclerView;
     MessageViewModel viewModel;
     MessageAdapter mAdapter;
+    String token;
+    String useridfortoken;
+    APISERVICESHIT apiserviceshit;
+    boolean notify = false;
+    String nameofsender;
 
     public Chatfragment() {
         // Required empty public constructor
@@ -71,6 +91,10 @@ public class Chatfragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        apiserviceshit = Client.getRetrofit("https://fcm.googleapis.com/").create(APISERVICESHIT.class);
+
 
 
         userName = view.findViewById(R.id.chatFragUserName);
@@ -102,19 +126,23 @@ public class Chatfragment extends Fragment {
         messageet_text = view.findViewById(R.id.etMessage);
 
 
+        Intent intent = getActivity().getIntent();
+        friendid = intent.getStringExtra("friendid");
 
         position = ChatfragmentArgs.fromBundle(getArguments()).getPosition();
         friendid = ChatfragmentArgs.fromBundle(getArguments()).getFriendid();
         imageUrl = ChatfragmentArgs.fromBundle(getArguments()).getImageUrl();
         username = ChatfragmentArgs.fromBundle(getArguments()).getUsername();
 
-        userName.setText(username);
+      //  userName.setText(username);
 
 
 
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                notify = true;
 
 
                 message = messageet_text.getText().toString();
@@ -160,11 +188,98 @@ public class Chatfragment extends Fragment {
 
             }
         });
+
+
+
+        firestore.collection("Users").document(userid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                UserModel userModel = documentSnapshot.toObject(UserModel.class);
+                nameofsender = userModel.getUsername();
+
+                Log.d(TAG, "onSuccess: " + nameofsender);
+
+
+                if (notify) {
+
+                    SendNotification(friendid, nameofsender, message);
+                    Log.d(TAG, "notify: " + nameofsender);
+
+
+                }
+
+                notify = false;
+
+
+            }
+        });
+
+
+
+
+
+    }
+
+    private void SendNotification(String friendid, String nameofsender, String message) {
+
+
+        useridfortoken = firebaseAuth.getCurrentUser().getUid();
+
+        firestore.collection("Tokens").document(friendid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+
+
+                assert value != null;
+                Token objectotoken = value.toObject(Token.class);
+                assert objectotoken != null;
+                token = objectotoken.getToken();
+
+                Log.d(TAG, "onEvent: " + token);
+
+
+                Data data = new Data(useridfortoken, R.mipmap.ic_launcher, message, "New Message From " + nameofsender, friendid);
+
+                Sender sender = new Sender(data, token);
+                apiserviceshit.sendNotification(sender).enqueue(new Callback<Response>() {
+                    @Override
+                    public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                        if (response.code() == 200) {
+
+                            if (response.body().success != 1) {
+
+                                Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+
+                            }
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Response> call, Throwable t) {
+
+                    }
+                });
+
+
+
+
+            }
+        });
+
+
+
+
+
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
 
 
         firestore.collection("Users").document(friendid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -177,6 +292,9 @@ public class Chatfragment extends Fragment {
                     DocumentSnapshot tasks = task.getResult();
 
                     String photoid = tasks.getString("imageUrl");
+                    String name = tasks.getString("username");
+
+                    userName.setText(name);
 
 
                     Glide.with(getContext()).load(photoid).centerCrop().into(imageView);

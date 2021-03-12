@@ -1,4 +1,4 @@
-package com.example.messenger.MyAdapter;
+package com.example.messenger;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,10 +7,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
-import com.example.messenger.Model.MessageModel;
-import com.example.messenger.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;

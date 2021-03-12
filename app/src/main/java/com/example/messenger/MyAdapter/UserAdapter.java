@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.bumptech.glide.Glide;
-import com.example.messenger.Model.UserModel;
 import com.example.messenger.R;
+import com.example.messenger.UserModel;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package com.example.messenger.MVVM;
+package com.example.messenger;
 
 import androidx.annotation.Nullable;
 
-import com.example.messenger.Model.UserModel;
+import com.example.messenger.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;

@@ -1,4 +1,4 @@
-package com.example.messenger.Model;
+package com.example.messenger;
 
 public class UserModel {
 

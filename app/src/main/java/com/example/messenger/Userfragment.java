@@ -15,24 +15,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.messenger.MVVM.UserViewModel;
-import com.example.messenger.Model.UserModel;
 import com.example.messenger.MyAdapter.UserAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -49,6 +49,9 @@ public class Userfragment extends Fragment implements UserAdapter.OnUserClicked 
     TextView userNameLoggedIn;
     FirebaseFirestore firestore;
     String userid;
+
+    String token;
+    String useridfortoken;
 
     public Userfragment() {
         // Required empty public constructor
@@ -162,8 +165,35 @@ public class Userfragment extends Fragment implements UserAdapter.OnUserClicked 
         });
 
 
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+
+                token = instanceIdResult.getToken();
+                GenerateToken(token);
+
+            }
+        });
+
     }
 
+    private void GenerateToken(String token) {
+
+        useridfortoken = firebaseAuth.getCurrentUser().getUid();
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("token", token);
+
+        firestore.collection("Tokens").document(useridfortoken).set(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+            }
+        });
+
+
+
+    }
 
 
     public void setStatus(String status) {
@@ -193,7 +223,7 @@ public class Userfragment extends Fragment implements UserAdapter.OnUserClicked 
     @Override
     public void UserisCicked(int position, List<UserModel> userModels) {
 
-        UserfragmentDirections.ActionUserFragmentToChatFragment action = UserfragmentDirections.actionUserFragmentToChatFragment();
+       UserfragmentDirections.ActionUserFragmentToChatFragment action = UserfragmentDirections.actionUserFragmentToChatFragment();
 
         UserModel userModel = userModels.get(position);
         String friendid = userModel.getUserid();

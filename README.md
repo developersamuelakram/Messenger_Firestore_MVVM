@@ -12,6 +12,8 @@ This app has.
 4. Recyclerview. 
 5. MVVM
 6. Navigation and much more. 
+7. Firebase Cloud Messaging
+8. Notifications for OREO and Onwards
 
 # YouTube Tutorial: https://www.youtube.com/watch?v=hZSj0HbOh44&list=PLKETiCsEsH0p47hA84bapGVaXIKHgjVdl
 
@@ -26,6 +28,9 @@ This app has.
 
 # Chat Fragment
 ![](images/3.jpg)
+
+# Notifications & FCM
+![](images6.jpg)
 
 
 

@@ -1,10 +1,8 @@
-package com.example.messenger.MVVM;
+package com.example.messenger;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.example.messenger.Model.MessageModel;
 
 import java.util.List;
 
